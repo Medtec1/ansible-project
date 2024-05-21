@@ -1,0 +1,26 @@
+---
+- name: Install MySQL and configure port
+  hosts: all
+  become: yes
+  vars:
+    ansible_user: managed2 
+    ansible_ssh_private_key_file: ~/.ssh/ansible_rsa  
+
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Copy MySQL port configuration template
+      template:
+        src: mysql_port.j2
+        dest: /etc/mysql/mysql.conf.d/mysql_port.cnf
+      notify: Restart MySQL Service
+
+  handlers:
+    - name: Restart MySQL Service
+      service:
+        name: mysql
+        state: restarted
+

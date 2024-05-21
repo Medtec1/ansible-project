@@ -1,0 +1,19 @@
+---
+- name: Installing MySQL on a managed Ansible node (Ubuntu)
+  hosts: all
+  become: true
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: latest
+
+    - name: Start MySQL service
+      service:
+        name: mysql
+        state: started
+
