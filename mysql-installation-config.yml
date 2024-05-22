@@ -16,6 +16,8 @@
       template:
         src: mysql_port.j2
         dest: /etc/mysql/mysql.conf.d/mysql_port.cnf
+        vars:
+          mysql_port: 3306
       notify: Restart MySQL Service
 
   handlers:
